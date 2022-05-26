@@ -13,7 +13,7 @@ https://bike-parts-4299a.web.app/
 - use mongodb
 - protected our database
 - review data
-- jwt token we useing
+- jwt token we use
 
 
 
