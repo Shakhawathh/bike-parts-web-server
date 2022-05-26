@@ -3,6 +3,7 @@ const cors = require('cors')
 const jwt = require('jsonwebtoken');
 require('dotenv').config()
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
+const { ObjectID } = require('bson');
 const app = express()
 const port = process.env.PORT || 5000
 
@@ -40,6 +41,8 @@ async function run() {
         const serviceCollection = client.db('bike_parts').collection('services')
         const bookingCollection = client.db('bike_parts').collection('bookings')
         const userCollection = client.db('bike_parts').collection('users')
+        const userInfoCollection = client.db('bike_parts').collection('infos')
+        const reviewCollection = client.db('bike_parts').collection('reviews')
 
 
 
@@ -129,8 +132,28 @@ async function run() {
             const result = await serviceCollection.insertOne(NewService)
             res.send(result)
         })
-     
-
+       
+        app.delete('/service/:id', async(req, res) =>{
+            const id =req.params.id
+            const query = {_id:ObjectID(id)}
+            const result= await serviceCollection.deleteOne(query)
+            res.send(result)
+        })
+        
+        app.post('/info', async (req, res) => {
+            const info = req.body
+            const result = userInfoCollection.insertOne(info)
+            res.send(result)
+        })
+        app.post('/review', async (req, res) => {
+            const review = req.body
+            const result = reviewCollection.insertOne(review    )
+            res.send(result)
+        })
+        app.get('/review',  async (req, res) => {
+            const users = await reviewCollection.find().toArray()
+            res.send(users)
+        })
 
     }
     finally {
