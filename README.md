@@ -14,6 +14,8 @@ https://bike-parts-4299a.web.app/
 - protected our database
 - review data
 - jwt token we use
+- localstorge
+
 
 
 
